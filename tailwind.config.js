@@ -10,7 +10,8 @@ module.exports = {
         'gray-light-form': '#BEBEBE',
         'blue-base' : '#7174E2',
         'body-color': '#F3F3F3',
-        'grey-base': '#D8DADF'
+        'grey-base': '#D8DADF',
+        'footer-color':"#303846"
       },
       fontSize: {
         '7xl': '8rem',
