@@ -18,6 +18,7 @@
             Email
           </label>
           <input
+            v-model="user.email"
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="text"
@@ -29,6 +30,7 @@
             Password
           </label>
           <input
+            v-model="user.password"
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
@@ -44,12 +46,14 @@
         </div>
 
         <button
+          @click.prevent="submit"
           class="w-full bg-blue-base hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-8"
           type="button"
         >
           Login
         </button>
         <a
+        
           class="block text-center text-blue-base text-sm hover:text-blue-800"
           href="#"
         >
@@ -59,3 +63,28 @@
     </div>
   </section>
 </template>
+
+
+<script>
+// @ is an alias to /src
+import axios from "axios";
+axios.defaults.withCredentials = true;
+
+export default {
+  data() {
+    return {
+      user: {
+        email: "camden43@example.org",
+        password: "password",
+      },
+      errorsMessage: "",
+    };
+  },
+  methods: {
+    async submit() {
+      await this.$store.dispatch("auth/login", this.user);
+      this.$router.push("/feed");
+    }
+  },
+};
+</script>

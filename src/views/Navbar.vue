@@ -58,9 +58,10 @@
             <div
               class="flex items-center flex-shrink-0 text-white mr-4 lg:mr-6"
             >
-              <span
+              <router-link
+                to="/feed"
                 class="font-semibold text-sm -ml-4 sm:ml-0 md:text-2xl tracking-tight text-gray-800"
-                >Hashdzcode</span
+                >Hashdzcode</router-link
               >
             </div>
           </div>
@@ -73,19 +74,20 @@
             />
           </div>
           <div class="hidden sm:block ml-auto">
-            <a
-              href="#"
+            <router-link
+              to="/new"
               class="block text-xs bg-blue-base px-2 py-2 rounded font-medium lg:mt-0 text-white"
             >
               Write a post
-            </a>
+            </router-link>
           </div>
         </div>
 
         <div
           class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6"
         >
-          <router-link to="/notifications"
+          <router-link v-if="isUserAuthenticated"
+            to="/notifications"
             class="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out"
             aria-label="Notifications"
           >
@@ -107,9 +109,10 @@
           </router-link>
 
           <!-- Profile dropdown -->
-          <div class="ml-1 relative">
+          <div class="ml-1 relative" v-if="isUserAuthenticated">
             <div>
               <button
+                @click="toggleProfileDropdown"
                 class="user-profile flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out"
                 id="user-menu"
                 aria-label="User menu"
@@ -122,45 +125,39 @@
                 />
               </button>
             </div>
-            <!--
-            Profile dropdown panel, show/hide based on dropdown state.
-
-            Entering: "transition ease-out duration-100"
-              From: "transform opacity-0 scale-95"
-              To: "transform opacity-100 scale-100"
-            Leaving: "transition ease-in duration-75"
-              From: "transform opacity-100 scale-100"
-              To: "transform opacity-0 scale-95"
-          -->
-            <div
-              class="profile-dropdown origin-top-right hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg"
-            >
+        
+            <transition name="fade">
               <div
-                class="py-1 rounded-md bg-white shadow-xs"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu"
+                v-show="showProfileDropDown"
+                class="profile-dropdown origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
               >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                  role="menuitem"
-                  >Your Profile</a
+                <div
+                  class="py-1 rounded-md bg-white shadow-xs"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="user-menu"
                 >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                  role="menuitem"
-                  >Settings</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                  role="menuitem"
-                  >Sign out</a
-                >
+                  <router-link
+                    to="/profile"
+                    class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                    role="menuitem"
+                    >Your Profile</router-link>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                    role="menuitem"
+                    >Settings</a
+                  >
+                  <a
+                    @click.prevent="logout"
+                    href="#"
+                    class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                    role="menuitem"
+                    >Sign out</a
+                  >
+                </div>
               </div>
-            </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -197,3 +194,40 @@
     </div>
   </nav>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+
+  methods: {
+    
+    async logout() {
+      await this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
+
+    toggleProfileDropdown() {
+       this.$store.dispatch('auth/toggleProfileDropDown');
+    }, 
+
+  },
+
+  computed: {
+    ...mapGetters("auth", ["user", "isUserLoggedIn", "showProfileDropDown"]),
+    isUserAuthenticated() {
+      return !!this.user && this.isUserLoggedIn;
+    }
+  },
+
+};
+</script>
+<style >
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>

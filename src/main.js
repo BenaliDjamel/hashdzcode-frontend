@@ -2,9 +2,15 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import {
+  initializeRouter
+} from './helpers/privateRoute';
 
 
-Vue.config.productionTip = false;
+
+Vue.config.productionTip = false
+
+initializeRouter(store, router);
 
 new Vue({
   router,

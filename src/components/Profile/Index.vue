@@ -7,12 +7,12 @@
 
         <div class="w-full pt-1 pb-5">
           <div class="hidden sm:flex sm:justify-end md:mt-3">
-            <a
-              href="#"
+            <router-link
+              to="/profile/edit"
               class="bg-blue-base px-2 text-sm md:px-2 py-2 mb-2 rounded md:font-medium lg:mt-0 text-white"
             >
               Edit Profile
-            </a>
+            </router-link>
           </div>
           <div
             class="rounded-full w-16 h-16 sm:w-24 sm:h-24 -mt-10 sm:-mt-24 mx-auto shadow-lg"
@@ -78,12 +78,12 @@
               </svg>
             </a>
             <div class="flex justify-center sm:hidden mt-4">
-              <a
-                href="#"
+              <router-link
+                to="/profile/edit"
                 class="bg-blue-base px-2 text-sm py-2 mb-2 rounded md:font-medium lg:mt-0 text-white"
               >
                 Edit Profile
-              </a>
+              </router-link>
             </div>
           </div>
         </div>

@@ -37,7 +37,8 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+
   },
   {
     path: "/login",
@@ -52,22 +53,29 @@ const routes = [
   {
     path: "/new",
     name: "CreatePost",
-    component: CreatePost
+    component: CreatePost,
+    meta: { requiresAuth: true }
+
   },
   {
     path: "/feed",
     name: "Feed",
-    component: Feed
+    component: Feed,
+    meta: { requiresAuth: true }
   },
   {
     path: "/post",
     name: "Post",
-    component: Post
+    component: Post,
+    meta: { requiresAuth: true }
+
   },
   {
     path: "/readinglist",
     name: "ReadingList",
-    component: ReadingList
+    component: ReadingList,
+    meta: { requiresAuth: true }
+
   },
   {
     path: "/jobs",
@@ -77,17 +85,23 @@ const routes = [
   {
     path: "/jobs/new",
     name: "CreateJob",
-    component: CreateJob
+    component: CreateJob,
+    meta: { requiresAuth: true }
+
   },
   {
     path: "/profile",
     name: "Profile",
-    component: Profile
+    component: Profile,
+    meta: { requiresAuth: true }
+
   },
   {
     path: "/profile/edit",
     name: "EditProfile",
-    component: EditProfile
+    component: EditProfile,
+    meta: { requiresAuth: true }
+
   },
   {
     path: "/posts/t",
@@ -102,7 +116,9 @@ const routes = [
   {
     path: "/notifications",
     name: "Notifications",
-    component: Notifications
+    component: Notifications,
+    meta: { requiresAuth: true }
+
   },
   {
     path: "/about",
@@ -117,7 +133,9 @@ const routes = [
   {
     path: "/chat",
     name: "Chat",
-    component: Chat
+    component: Chat,
+    meta: { requiresAuth: true }
+
   },
   /*  {
      path: "/about",
