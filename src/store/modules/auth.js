@@ -50,8 +50,11 @@ const actions = {
     },
     async signup({ commit }, user) {
         try {
+            await axios.get('/sanctum/csrf-cookie');
+
             const response = await axios.post('/api/signup', user);
             console.log("🚀 ~ file: auth.js ~ line 55 ~ signup ~ response", response)
+            return response.data;
 
         } catch (error) {
             console.log("🚀 ~ file: auth.js ~ line 58 ~ signup ~ error", error.response.data)

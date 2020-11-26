@@ -232,8 +232,9 @@ export default {
             password: this.user.password,
             password_confirmation: this.user.passwordConfirmation
           }
-          await this.$store.dispatch("auth/signup", user);
-          this.$router.push("/login");
+          await this.$store.dispatch("auth/signup", user);         
+          await this.$store.dispatch("auth/login", user);
+          this.$router.push("/feed");
         }
       } catch (error) {
       console.log("🚀 ~ file: Signup.vue ~ line 233 ~ submit ~ error", error)
