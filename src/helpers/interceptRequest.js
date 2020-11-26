@@ -7,7 +7,7 @@ import axios from 'axios'
             store.commit('auth/logout');
             localStorage.removeItem('user');
             router.push('/login');
-            return Promise.reject(error);
         }
+        return Promise.reject(error);
     });
   }

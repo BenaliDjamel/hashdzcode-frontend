@@ -38,9 +38,15 @@ const mutations = {
 const actions = {
 
     async login({ commit }, user) {
-        await axios.get('/sanctum/csrf-cookie');
-        const response = await axios.post('/api/login', user);
-        commit('setUser', response.data);
+        try {
+            await axios.get('/sanctum/csrf-cookie');
+            const response = await axios.post('/api/login', user);
+            console.log("🚀 ~ file: auth.js ~ line 45 ~ login ~ response", response)
+            commit('setUser', response.data);
+        } catch (error) {
+            console.log("🚀 ~ file: auth.js ~ line 47 ~ login ~ error", error.response.data)
+            throw JSON.stringify(error.response.data.errors)
+        }
     },
 
     async logout({ commit }) {
