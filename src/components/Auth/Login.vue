@@ -99,8 +99,7 @@
 
 <script>
 import { required, email, minLength } from "vuelidate/lib/validators";
-import {extractErrorsForDisplay} from "../../helpers/extractErrorsForDisplay"
-
+import { extractErrorsForDisplay } from "../../helpers/extractErrorsForDisplay";
 
 import axios from "axios";
 axios.defaults.withCredentials = true;
@@ -112,7 +111,7 @@ export default {
         email: "",
         password: "",
       },
-      errorsForm:""
+      errorsForm: "",
     };
   },
   validations: {
@@ -137,17 +136,9 @@ export default {
           this.$router.push("/feed");
         }
       } catch (error) {
-        
-         this.errorsForm = extractErrorsForDisplay(error);
+        this.errorsForm = extractErrorsForDisplay(error);
       }
     },
-   
-
-    /* clearErrorForm() {
-      for (const key in this.errorsForm) {
-        this.errorsForm[key] = "";
-      }
-    }, */
   },
 };
 </script>

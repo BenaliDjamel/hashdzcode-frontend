@@ -1,6 +1,6 @@
 <template>
   <section class="mt-6">
-    <div class="flex items-center justify-center ">
+    <div class="flex items-center justify-center">
       <form
         class="w-full lg:w-2/6 bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4"
       >
@@ -13,7 +13,7 @@
           </p>
         </div>
 
-         <ul class="mb-4">
+        <ul class="mb-4">
           <li
             class="block text-red-500 text-sm mb-2"
             v-for="(error, key) of errorsForm"
@@ -70,7 +70,7 @@
               class="text-red-500 text-xs italic"
               >The Firstname must be at least 3 characters.</span
             >
-             <span
+            <span
               v-if="!$v.user.firstname.maxLength"
               class="text-red-500 text-xs italic"
               >The Firstname may not be greater than 10 characters.</span
@@ -100,7 +100,7 @@
               class="text-red-500 text-xs italic"
               >The Lastname must be at least 3 characters.</span
             >
-             <span
+            <span
               v-if="!$v.user.lastname.maxLength"
               class="text-red-500 text-xs italic"
               >The Lastname may not be greater than 10 characters.</span
@@ -132,8 +132,11 @@
             >
           </div>
         </div>
-         <div class="">
-          <label class="block text-gray-700 text-sm mb-2" for="confirm-password">
+        <div class="">
+          <label
+            class="block text-gray-700 text-sm mb-2"
+            for="confirm-password"
+          >
             Password Confirmation
           </label>
           <input
@@ -144,17 +147,19 @@
             placeholder="Confirm password"
           />
           <div v-if="$v.user.passwordConfirmation.$dirty">
-              <span
+            <span
               v-if="!$v.user.passwordConfirmation.required"
               class="text-red-500 text-xs italic"
               >The Password confirmation is required.</span
             >
             <span
-              v-if="$v.user.passwordConfirmation.required && !$v.user.passwordConfirmation.sameAs"
+              v-if="
+                $v.user.passwordConfirmation.required &&
+                !$v.user.passwordConfirmation.sameAs
+              "
               class="text-red-500 text-xs italic"
               >The Password confirmation does not match</span
             >
-          
           </div>
         </div>
         <div class="flex mb-8">
@@ -165,7 +170,7 @@
         </div>
 
         <button
-        @click.prevent="submit"
+          @click.prevent="submit"
           class="w-full bg-blue-base hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button"
         >
@@ -176,8 +181,14 @@
   </section>
 </template>
 <script>
-import { required, email, sameAs, minLength, maxLength } from "vuelidate/lib/validators";
-import {extractErrorsForDisplay} from "../../helpers/extractErrorsForDisplay"
+import {
+  required,
+  email,
+  sameAs,
+  minLength,
+  maxLength,
+} from "vuelidate/lib/validators";
+import { extractErrorsForDisplay } from "../../helpers/extractErrorsForDisplay";
 
 export default {
   data() {
@@ -187,7 +198,7 @@ export default {
         firstname: "",
         lastname: "",
         password: "",
-        passwordConfirmation:""
+        passwordConfirmation: "",
       },
       errorsForm: "",
     };
@@ -214,8 +225,8 @@ export default {
       },
       passwordConfirmation: {
         required,
-        sameAs:sameAs('password')
-      }
+        sameAs: sameAs("password"),
+      },
     },
   },
 
@@ -230,19 +241,16 @@ export default {
             firstname: this.user.firstname,
             lastname: this.user.lastname,
             password: this.user.password,
-            password_confirmation: this.user.passwordConfirmation
-          }
-          await this.$store.dispatch("auth/signup", user);         
+            password_confirmation: this.user.passwordConfirmation,
+          };
+          await this.$store.dispatch("auth/signup", user);
           await this.$store.dispatch("auth/login", user);
           this.$router.push("/feed");
         }
       } catch (error) {
-      console.log("🚀 ~ file: Signup.vue ~ line 233 ~ submit ~ error", error)
-      
         this.errorsForm = extractErrorsForDisplay(error);
       }
     },
-
   },
 };
 </script>
