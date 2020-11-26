@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="flex items-center justify-center h-screen">
+    <div class="flex items-center justify-center mt-6">
       <form
         class="w-full lg:w-2/6 bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4"
       >
@@ -99,6 +99,8 @@
 
 <script>
 import { required, email, minLength } from "vuelidate/lib/validators";
+import {extractErrorsForDisplay} from "../../helpers/extractErrorsForDisplay"
+
 
 import axios from "axios";
 axios.defaults.withCredentials = true;
@@ -110,11 +112,7 @@ export default {
         email: "",
         password: "",
       },
-      errorsForm: {
-        email: "",
-        password: "",
-        user: "",
-      },
+      errorsForm:""
     };
   },
   validations: {
@@ -139,22 +137,17 @@ export default {
           this.$router.push("/feed");
         }
       } catch (error) {
-        this.clearErrorForm();
-        this.extractErrorsForDisplay(error);
+        
+         this.errorsForm = extractErrorsForDisplay(error);
       }
     },
-    extractErrorsForDisplay(error) {
-      const parsedError = JSON.parse(error);
-      for (const [key, errorMessages] of Object.entries(parsedError)) {
-        this.errorsForm[key] = errorMessages[0];
-      }
-    },
+   
 
-    clearErrorForm() {
+    /* clearErrorForm() {
       for (const key in this.errorsForm) {
         this.errorsForm[key] = "";
       }
-    },
+    }, */
   },
 };
 </script>

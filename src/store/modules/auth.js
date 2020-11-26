@@ -48,6 +48,16 @@ const actions = {
             throw JSON.stringify(error.response.data.errors)
         }
     },
+    async signup({ commit }, user) {
+        try {
+            const response = await axios.post('/api/signup', user);
+            console.log("🚀 ~ file: auth.js ~ line 55 ~ signup ~ response", response)
+
+        } catch (error) {
+            console.log("🚀 ~ file: auth.js ~ line 58 ~ signup ~ error", error.response.data)
+            throw JSON.stringify(error.response.data.errors)
+        }
+    },
 
     async logout({ commit }) {
         await axios.post('/api/logout');
