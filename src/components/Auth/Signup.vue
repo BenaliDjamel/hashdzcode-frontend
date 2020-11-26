@@ -235,14 +235,7 @@ export default {
       this.$v.$touch();
       try {
         if (!this.$v.$invalid) {
-          console.log("submit!");
-          const user = {
-            email: this.user.email,
-            firstname: this.user.firstname,
-            lastname: this.user.lastname,
-            password: this.user.password,
-            password_confirmation: this.user.passwordConfirmation,
-          };
+          const user = this.mapUserForRequest(this.user);
           await this.$store.dispatch("auth/signup", user);
           await this.$store.dispatch("auth/login", user);
           this.$router.push("/feed");
@@ -250,6 +243,15 @@ export default {
       } catch (error) {
         this.errorsForm = extractErrorsForDisplay(error);
       }
+    },
+    mapUserForRequest(user) {
+      return {
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        password: user.password,
+        password_confirmation: user.passwordConfirmation,
+      };
     },
   },
 };
